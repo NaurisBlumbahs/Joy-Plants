@@ -10,17 +10,22 @@ public class NewPlantGrowth : MonoBehaviour
     public float mustWaterTime;
     [SerializeField] float mustWaterDefault;
 
+    private bool plantGrowthStarted;
+
     // Start is called before the first frame update
     void Start()
     {
         mustWaterTime = mustWaterDefault;
-        InvokeRepeating("Growth", timeBetweenStages, timeBetweenStages);
     }
 
     // Update is called once per frame
     void Update()
     {
-        mustWaterTime -= Time.deltaTime;
+        if (plantGrowthStarted)
+        {
+            mustWaterTime -= Time.deltaTime;
+        }
+
         if (mustWaterTime < 0)
         {
             PlantDie();
@@ -29,6 +34,8 @@ public class NewPlantGrowth : MonoBehaviour
 
     public void Growth ()
     {
+        plantGrowthStarted = true;
+
         if (currentProgression != maxGrowth)
         {
             gameObject.transform.GetChild(currentProgression).gameObject.SetActive(true);
@@ -58,6 +65,10 @@ public class NewPlantGrowth : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             if (Input.GetKeyDown(KeyCode.P))
+            {
+                InvokeRepeating("Growth", timeBetweenStages, timeBetweenStages);
+            }
+            if (Input.GetKeyDown(KeyCode.O))
             {
                 mustWaterTime = mustWaterDefault;
             }
