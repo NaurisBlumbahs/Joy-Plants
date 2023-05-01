@@ -172,7 +172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2061791013732521247, guid: a7ebda3463ab84b4b84ccb4c38f5dd14, type: 3}
       propertyPath: m_Name
-      value: Stage_4
+      value: Final
       objectReference: {fileID: 0}
     - target: {fileID: 2061791013732521247, guid: a7ebda3463ab84b4b84ccb4c38f5dd14, type: 3}
       propertyPath: m_IsActive
