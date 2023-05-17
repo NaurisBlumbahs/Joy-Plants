@@ -1885,8 +1885,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 913763499}
     - target: {fileID: 8723291888933499332, guid: ce339f503a363ec4cad8d4ba03262774, type: 3}
+      propertyPath: money
+      value: 
+      objectReference: {fileID: 1564039324}
+    - target: {fileID: 8723291888933499332, guid: ce339f503a363ec4cad8d4ba03262774, type: 3}
+      propertyPath: sellValue
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723291888933499332, guid: ce339f503a363ec4cad8d4ba03262774, type: 3}
+      propertyPath: plantValue
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723291888933499332, guid: ce339f503a363ec4cad8d4ba03262774, type: 3}
+      propertyPath: mustWaterGrown
+      value: 999
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723291888933499332, guid: ce339f503a363ec4cad8d4ba03262774, type: 3}
+      propertyPath: timeBetweenStages
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723291888933499332, guid: ce339f503a363ec4cad8d4ba03262774, type: 3}
       propertyPath: timeBetweenStagesDefault
-      value: 25
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8723291888933499333, guid: ce339f503a363ec4cad8d4ba03262774, type: 3}
       propertyPath: m_Name
@@ -3966,8 +3986,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4953365827518873662, guid: 6e752a7db76bfa940a0a117cd19d505d, type: 3}
+      propertyPath: money
+      value: 
+      objectReference: {fileID: 1564039324}
+    - target: {fileID: 4953365827518873662, guid: 6e752a7db76bfa940a0a117cd19d505d, type: 3}
+      propertyPath: sellValue
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4953365827518873662, guid: 6e752a7db76bfa940a0a117cd19d505d, type: 3}
+      propertyPath: plantValue
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4953365827518873662, guid: 6e752a7db76bfa940a0a117cd19d505d, type: 3}
+      propertyPath: mustWaterGrown
+      value: 999
+      objectReference: {fileID: 0}
+    - target: {fileID: 4953365827518873662, guid: 6e752a7db76bfa940a0a117cd19d505d, type: 3}
+      propertyPath: timeBetweenStages
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4953365827518873662, guid: 6e752a7db76bfa940a0a117cd19d505d, type: 3}
       propertyPath: timeBetweenStagesDefault
-      value: 30
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4953365827518873663, guid: 6e752a7db76bfa940a0a117cd19d505d, type: 3}
       propertyPath: m_Name
@@ -3986,6 +4026,18 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 913763499}
+    - target: {fileID: 8723291888933499332, guid: 676d1958ee7a9ab4d88bf593b2af7f12, type: 3}
+      propertyPath: money
+      value: 
+      objectReference: {fileID: 1564039324}
+    - target: {fileID: 8723291888933499332, guid: 676d1958ee7a9ab4d88bf593b2af7f12, type: 3}
+      propertyPath: sellValue
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8723291888933499332, guid: 676d1958ee7a9ab4d88bf593b2af7f12, type: 3}
+      propertyPath: plantValue
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8723291888933499332, guid: 676d1958ee7a9ab4d88bf593b2af7f12, type: 3}
       propertyPath: mustWaterGrown
       value: 999

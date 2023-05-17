@@ -13,20 +13,22 @@ public class NewPlantGrowth : MonoBehaviour
     public float mustWaterTime;
     [SerializeField] float mustWaterDefault;
     [SerializeField] float mustWaterGrown;
+    [SerializeField] float sellValue;
+    [SerializeField] float plantValue;
     private bool canHarvest;
     private bool isDead = false;
     private bool plantGrowthStarted;
     private bool canPlantAgain = true;
     public TextMeshProUGUI timeToGrow;
     public TextMeshProUGUI timeToWater;
+    private MoneyManager moneyManager;
 
-    // Start is called before the first frame update
     void Start()
     {
         mustWaterTime = mustWaterDefault;
+        moneyManager = GameObject.Find("GlobalManager").GetComponent<MoneyManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         timeToWater.text = mustWaterTime.ToString("F0");
@@ -143,6 +145,7 @@ public class NewPlantGrowth : MonoBehaviour
     {
         canPlantAgain = false;
         InvokeRepeating("Growth", 0, timeBetweenStages);
+        moneyManager.UpdateMoneySpent(plantValue);
         Debug.Log(gameObject.name + " was planted");
     }
     private void Water()
@@ -164,6 +167,7 @@ public class NewPlantGrowth : MonoBehaviour
         currentProgression = 0;
         timeBetweenStages = timeBetweenStagesDefault;
         mustWaterTime = mustWaterDefault;
+        moneyManager.UpdateMoneyEarned(sellValue);
         Debug.Log(gameObject.name + " was harvested");
     }
 

@@ -12,6 +12,17 @@ public class MoneyManager : MonoBehaviour
     private void Start()
     {
         money = 100f;
+    }
+    private void Update()
+    {
         moneyToText.text = money.ToString("F0");
+    }
+    public void UpdateMoneyEarned(float moneyEarned)
+    {
+        money += moneyEarned;
+    }
+    public void UpdateMoneySpent(float moneySpent)
+    {
+        money -= moneySpent;
     }
 }
