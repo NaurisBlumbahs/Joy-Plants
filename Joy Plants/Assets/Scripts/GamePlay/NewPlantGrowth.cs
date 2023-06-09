@@ -15,6 +15,7 @@ public class NewPlantGrowth : MonoBehaviour
     [SerializeField] float sellValue;
     [SerializeField] float plantValue;
     [SerializeField] float lightMultiplier;
+    [SerializeField] float radioMultiplier;
     public TextMeshProUGUI timeToGrow;
     public TextMeshProUGUI timeToWater;
     public Lamps lampManager;
@@ -25,11 +26,13 @@ public class NewPlantGrowth : MonoBehaviour
     private bool canPlantAgain = true;
     private bool inZone;
     private MoneyManager moneyManager;
+    private Radio radioManager;
 
     void Start()
     {
         mustWaterTime = mustWaterDefault;
         moneyManager = GameObject.Find("GlobalManager").GetComponent<MoneyManager>();
+        radioManager = GameObject.Find("Radio").GetComponent<Radio>();
     }
 
     void Update()
@@ -39,7 +42,16 @@ public class NewPlantGrowth : MonoBehaviour
 
         if (plantGrowthStarted == true && isDead == false && canHarvest == false)
         {
-            mustWaterTime -= Time.deltaTime;
+            if (!radioManager.radioIsOn)
+            {
+                mustWaterTime -= Time.deltaTime;
+                timeToWater.color = Color.white;
+            }
+            if (radioManager.radioIsOn)
+            {
+                mustWaterTime -= radioMultiplier * Time.deltaTime;
+                timeToWater.color = Color.blue;
+            }
 
             if (timeBetweenStages <= 0f)
             {
@@ -51,6 +63,7 @@ public class NewPlantGrowth : MonoBehaviour
         {
             mustWaterTime -= Time.deltaTime;
             timeToGrow.text = "Grown";
+            timeToWater.color = Color.white;
         }
         if (plantGrowthStarted)
         {
@@ -74,6 +87,7 @@ public class NewPlantGrowth : MonoBehaviour
         {
             timeToGrow.text = "Dead";
             timeToWater.text = "Dead";
+            timeToGrow.color = Color.white;
         }
         if (inZone)
         {
@@ -116,6 +130,7 @@ public class NewPlantGrowth : MonoBehaviour
         //CancelInvoke("Growth");
         Debug.Log(gameObject.name + " has grown");
         mustWaterTime = mustWaterGrown;
+        timeToGrow.color = Color.white;
     }
     public void PlantDie()
     {
@@ -129,6 +144,7 @@ public class NewPlantGrowth : MonoBehaviour
         //CancelInvoke("Growth");
 
         mustWaterTime = 0;
+        timeToWater.color = Color.white;
 
         plantGrowthStarted = false;
         isDead = true;
@@ -201,6 +217,7 @@ public class NewPlantGrowth : MonoBehaviour
         timeBetweenStages = timeBetweenStagesDefault;
         mustWaterTime = mustWaterDefault;
         moneyManager.UpdateMoneyEarned(sellValue);
+        timeToWater.color = Color.white;
         Debug.Log(gameObject.name + " was harvested");
     }
 
@@ -212,6 +229,7 @@ public class NewPlantGrowth : MonoBehaviour
         currentProgression = 0;
         timeBetweenStages = timeBetweenStagesDefault;
         mustWaterTime = mustWaterDefault;
+        timeToWater.color = Color.white;
         Debug.Log(gameObject.name + " was thrown out");
     }
 }
