@@ -19,6 +19,7 @@ public class NewPlantGrowth : MonoBehaviour
     public TextMeshProUGUI timeToGrow;
     public TextMeshProUGUI timeToWater;
     public Lamps lampManager;
+    public GameObject growParticle;
     private int currentProgression = 0;
     private bool canHarvest;
     private bool isDead = false;
@@ -55,6 +56,7 @@ public class NewPlantGrowth : MonoBehaviour
 
             if (timeBetweenStages <= 0f)
             {
+                Instantiate(growParticle, transform.position, Quaternion.identity);
                 Growth();
                 timeBetweenStages = timeBetweenStagesDefault;
             }
@@ -112,7 +114,7 @@ public class NewPlantGrowth : MonoBehaviour
         {
             Debug.Log(gameObject.name + " has reached phase " + gameObject.transform.GetChild(currentProgression).name);
 
-            currentProgression++;      
+            currentProgression++;   
         }
         if (transform.GetChild(3).gameObject.active)
         {
@@ -127,7 +129,6 @@ public class NewPlantGrowth : MonoBehaviour
     
     private void PlantGrown()
     {
-        //CancelInvoke("Growth");
         Debug.Log(gameObject.name + " has grown");
         mustWaterTime = mustWaterGrown;
         timeToGrow.color = Color.white;
@@ -140,8 +141,6 @@ public class NewPlantGrowth : MonoBehaviour
         }
 
         gameObject.transform.GetChild(4).gameObject.SetActive(true);
-
-        //CancelInvoke("Growth");
 
         mustWaterTime = 0;
         timeToWater.color = Color.white;
@@ -193,7 +192,6 @@ public class NewPlantGrowth : MonoBehaviour
     {
         canPlantAgain = false;
         Growth();
-        //InvokeRepeating("Growth", 0, timeBetweenStages);
         moneyManager.UpdateMoneySpent(plantValue);
         Debug.Log(gameObject.name + " was planted");
     }

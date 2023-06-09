@@ -638,6 +638,7 @@ MonoBehaviour:
   sellValue: 10
   plantValue: 5
   lightMultiplier: 5
+  radioMultiplier: 0
   timeToGrow: {fileID: 7849445020311904354}
   timeToWater: {fileID: 6689263889714371593}
   lampManager: {fileID: 0}
