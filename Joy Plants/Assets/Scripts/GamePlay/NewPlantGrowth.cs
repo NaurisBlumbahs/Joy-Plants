@@ -6,21 +6,24 @@ using TMPro;
 
 public class NewPlantGrowth : MonoBehaviour
 {
-    private int currentProgression = 0;
-    public float timeBetweenStages;
+    [SerializeField] float timeBetweenStages;
     [SerializeField] float timeBetweenStagesDefault;
     [SerializeField] int maxGrowth;
-    public float mustWaterTime;
+    [SerializeField] float mustWaterTime;
     [SerializeField] float mustWaterDefault;
     [SerializeField] float mustWaterGrown;
     [SerializeField] float sellValue;
     [SerializeField] float plantValue;
+    [SerializeField] float lightMultiplier;
+    public TextMeshProUGUI timeToGrow;
+    public TextMeshProUGUI timeToWater;
+    public Lamps lampManager;
+    private int currentProgression = 0;
     private bool canHarvest;
     private bool isDead = false;
     private bool plantGrowthStarted;
     private bool canPlantAgain = true;
-    public TextMeshProUGUI timeToGrow;
-    public TextMeshProUGUI timeToWater;
+    private bool inZone;
     private MoneyManager moneyManager;
 
     void Start()
@@ -40,6 +43,7 @@ public class NewPlantGrowth : MonoBehaviour
 
             if (timeBetweenStages <= 0f)
             {
+                Growth();
                 timeBetweenStages = timeBetweenStagesDefault;
             }
         }
@@ -50,7 +54,17 @@ public class NewPlantGrowth : MonoBehaviour
         }
         if (plantGrowthStarted)
         {
-            timeBetweenStages -= Time.deltaTime;
+            if (lampManager.lightOn == false)
+            {
+                timeBetweenStages -= Time.deltaTime;
+                timeToGrow.color = Color.white;
+            }
+
+            if (lampManager.lightOn == true)
+            {
+                timeBetweenStages -= lightMultiplier * Time.deltaTime;
+                timeToGrow.color = Color.yellow;
+            }
         }
         if (mustWaterTime < 0)
         {
@@ -60,6 +74,10 @@ public class NewPlantGrowth : MonoBehaviour
         {
             timeToGrow.text = "Dead";
             timeToWater.text = "Dead";
+        }
+        if (inZone)
+        {
+            InteractWithPot();
         }
     }
 
@@ -95,7 +113,7 @@ public class NewPlantGrowth : MonoBehaviour
     
     private void PlantGrown()
     {
-        CancelInvoke("Growth");
+        //CancelInvoke("Growth");
         Debug.Log(gameObject.name + " has grown");
         mustWaterTime = mustWaterGrown;
     }
@@ -108,7 +126,7 @@ public class NewPlantGrowth : MonoBehaviour
 
         gameObject.transform.GetChild(4).gameObject.SetActive(true);
 
-        CancelInvoke("Growth");
+        //CancelInvoke("Growth");
 
         mustWaterTime = 0;
 
@@ -119,32 +137,47 @@ public class NewPlantGrowth : MonoBehaviour
         Debug.Log(gameObject.name + " has died");
     }
 
-    public void OnTriggerStay(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            if (canPlantAgain && Input.GetKeyDown(KeyCode.P))
-            {
-                Plant();
-            }
-            if (Input.GetKeyDown(KeyCode.O))
-            {
-                Water();
-            }
-            if (canHarvest && Input.GetKeyDown(KeyCode.H))
-            {
-                Harvest();
-            }
-            if (isDead && Input.GetKeyDown(KeyCode.J))
-            {
-                Discard();
-            }
+            inZone = true;
         }
     }
+
+        public void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            inZone = false;
+        }
+    }
+
+    private void InteractWithPot()
+    {
+        if (canPlantAgain && Input.GetKeyDown(KeyCode.P))
+        {
+            Plant();
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            Water();
+        }
+        if (canHarvest && Input.GetKeyDown(KeyCode.H))
+        {
+            Harvest();
+        }
+        if (isDead && Input.GetKeyDown(KeyCode.J))
+        {
+            Discard();
+        }
+    }
+
     private void Plant()
     {
         canPlantAgain = false;
-        InvokeRepeating("Growth", 0, timeBetweenStages);
+        Growth();
+        //InvokeRepeating("Growth", 0, timeBetweenStages);
         moneyManager.UpdateMoneySpent(plantValue);
         Debug.Log(gameObject.name + " was planted");
     }
